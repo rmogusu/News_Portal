@@ -47,6 +47,42 @@ public class UsersTest {
         Users testUsers = setupUsers();
         assertEquals("IT", testUsers.getDepartment());
     }
+    @Test
+    public void setNameSetsCorrectName() throws Exception {
+        Users  testUsers = setupUsers();
+        testUsers.setName("Rose");
+        assertNotEquals("Faith",testUsers.getName());
+    }
+    @Test
+    public void setPositionSetsCorrectPosition() throws Exception {
+        Users  testUsers = setupUsers();
+        testUsers.setPosition("Accountant") ;
+        assertNotEquals("IT Technician",testUsers.getPosition());
+    }
+    @Test
+    public void setRoleSetsCorrectRole() throws Exception {
+        Users  testUsers = setupUsers();
+        testUsers.setRole("Financial operations") ;
+        assertNotEquals("repair",testUsers.getRole());
+    }
+    @Test
+    public void setEmailSetsCorrectEmail() throws Exception {
+        Users  testUsers = setupUsers();
+        testUsers.setEmail("mogusurose@gmail.com") ;
+        assertNotEquals("rmogusu123@gmail.com",testUsers.getEmail());
+    }
+    @Test
+    public void setBadgeNoSetsCorrectBadgeNo() throws Exception {
+        Users  testUsers = setupUsers();
+        testUsers.setBadgeNo("5432") ;
+        assertNotEquals("2345",testUsers.getBadgeNo());
+    }
+    @Test
+    public void setDepartmentSetsCorrectDepartment() throws Exception {
+        Users  testUsers = setupUsers();
+        testUsers.setDepartment("Accountant") ;
+        assertNotEquals("IT",testUsers.getDepartment() );
+    }
     public Users  setupUsers (){
         return new Users("Faith", "IT Technician", "repair", "rmogusu123@gmail.com","2345","IT") ;
     }
