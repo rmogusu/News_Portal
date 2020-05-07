@@ -17,4 +17,60 @@ public class Users {
         this.department = department;
         this.email = email;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getBadgeNo() {
+        return badgeNo;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBadgeNo(String badgeNo) {
+        this.badgeNo = badgeNo;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

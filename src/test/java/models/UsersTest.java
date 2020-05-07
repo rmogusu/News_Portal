@@ -24,7 +24,7 @@ public class UsersTest {
     @Test
     public void getPositionReturnsCorrectAddress() throws Exception {
         Users testUsers = setupUsers();
-        assertEquals("214 NE Broadway", testUsers.getPosition());
+        assertEquals("IT Technician", testUsers.getPosition());
     }
     public Users  setupUsers (){
         return new Users("Faith", "IT Technician", "repair", "rmogusu123@gmail.com","2345","IT") ;
