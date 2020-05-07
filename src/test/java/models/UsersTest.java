@@ -22,20 +22,30 @@ public class UsersTest {
     }
 
     @Test
-    public void getPositionReturnsCorrectAddress() throws Exception {
+    public void getPositionReturnsCorrectPosition() throws Exception {
         Users testUsers = setupUsers();
         assertEquals("IT Technician", testUsers.getPosition());
     }
     @Test
-    public void getRoleReturnsCorrectAddress() throws Exception {
+    public void getRoleReturnsCorrectRole() throws Exception {
         Users testUsers = setupUsers();
         assertEquals("repair", testUsers.getRole());
 
     }
     @Test
-    public void getEmailReturnsCorrectAddress() throws Exception {
+    public void getEmailReturnsCorrectEmail() throws Exception {
         Users testUsers = setupUsers();
         assertEquals("rmogusu123@gmail.com", testUsers.getEmail());
+    }
+    @Test
+    public void getBadgeNoReturnsCorrectBadgeNo() throws Exception {
+        Users testUsers = setupUsers();
+        assertEquals("2345", testUsers.getBadgeNo());
+    }
+    @Test
+    public void getDepartmentReturnsCorrectDepartment() throws Exception {
+        Users testUsers = setupUsers();
+        assertEquals("IT", testUsers.getDepartment());
     }
     public Users  setupUsers (){
         return new Users("Faith", "IT Technician", "repair", "rmogusu123@gmail.com","2345","IT") ;
