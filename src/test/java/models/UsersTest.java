@@ -83,7 +83,26 @@ public class UsersTest {
         testUsers.setDepartment("Accountant") ;
         assertNotEquals("IT",testUsers.getDepartment() );
     }
+    @Test
+    public void getDepartmentId() {
+        Users  testUsers = setupUsers();
+        assertEquals(1, testUsers.getDepartmentId());
+    }
+
+    @Test
+    public void setDepartmentId() {
+        Users  testUsers = setupUsers();
+        testUsers.setDepartmentId(10);
+        assertNotEquals(1, testUsers.getDepartmentId());
+    }
+
+    @Test
+    public void setId() {
+        Users  testUsers = setupUsers();
+        testUsers.setId(5);
+        assertEquals(5, testUsers .getId());
+    }
     public Users  setupUsers (){
-        return new Users("Faith", "IT Technician", "repair", "rmogusu123@gmail.com","2345","IT") ;
+        return new Users("Faith", "IT Technician", "repair", "rmogusu123@gmail.com","2345","IT",1) ;
     }
 }
