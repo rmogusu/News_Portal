@@ -7,12 +7,12 @@ public class Users {
     private String position;
     private String role;
     private String email;
-    private String badgeNo;
+    private int badgeNo;
     private String department;
     private int departmentId;
     private int id;
 
-    public Users(String name, String position, String role, String email, String badgeNo, String department,int departmentId) {
+    public Users(String name, String position, String role, String email, int badgeNo, String department,int departmentId) {
         this.name = name;
         this.position = position;
         this.role = role;
@@ -38,7 +38,7 @@ public class Users {
         return email;
     }
 
-    public String getBadgeNo() {
+    public int getBadgeNo() {
         return badgeNo;
     }
 
@@ -70,7 +70,7 @@ public class Users {
         this.email = email;
     }
 
-    public void setBadgeNo(String badgeNo) {
+    public void setBadgeNo(int badgeNo) {
         this.badgeNo = badgeNo;
     }
 
