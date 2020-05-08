@@ -9,15 +9,17 @@ public class Users {
     private String email;
     private String badgeNo;
     private String department;
+    private int departmentId;
     private int id;
 
-    public Users(String name, String position, String role, String email, String badgeNo, String department) {
+    public Users(String name, String position, String role, String email, String badgeNo, String department,int departmentId) {
         this.name = name;
         this.position = position;
         this.role = role;
         this.badgeNo = badgeNo;
         this.department = department;
         this.email = email;
+        this.departmentId =departmentId;
     }
 
     public String getName() {
@@ -42,6 +44,10 @@ public class Users {
 
     public String getDepartment() {
         return department;
+    }
+
+    public int getDepartmentId() {
+        return departmentId;
     }
 
     public int getId() {
@@ -72,6 +78,10 @@ public class Users {
         this.department = department;
     }
 
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -81,6 +91,7 @@ public class Users {
         if (!(o instanceof Users )) return false;
         Users  that = (Users ) o;
         return id == that.id &&
+                departmentId == that.departmentId  &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(position , that.position) &&
                 Objects.equals(role, that.role ) &&
