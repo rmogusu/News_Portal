@@ -40,7 +40,7 @@ public class UsersTest {
     @Test
     public void getBadgeNoReturnsCorrectBadgeNo() throws Exception {
         Users testUsers = setupUsers();
-        assertEquals("2345", testUsers.getBadgeNo());
+        assertEquals(2345, testUsers.getBadgeNo());
     }
     @Test
     public void getDepartmentReturnsCorrectDepartment() throws Exception {
@@ -74,8 +74,8 @@ public class UsersTest {
     @Test
     public void setBadgeNoSetsCorrectBadgeNo() throws Exception {
         Users  testUsers = setupUsers();
-        testUsers.setBadgeNo("5432") ;
-        assertNotEquals("2345",testUsers.getBadgeNo());
+        testUsers.setBadgeNo(5432) ;
+        assertNotEquals(2345,testUsers.getBadgeNo());
     }
     @Test
     public void setDepartmentSetsCorrectDepartment() throws Exception {
@@ -103,6 +103,6 @@ public class UsersTest {
         assertEquals(5, testUsers .getId());
     }
     public Users  setupUsers (){
-        return new Users("Faith", "IT Technician", "repair", "rmogusu123@gmail.com","2345","IT",1) ;
+        return new Users("Faith", "IT Technician", "repair", "rmogusu123@gmail.com",2345,"IT",1) ;
     }
 }
