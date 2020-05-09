@@ -1,7 +1,9 @@
 package dao;
 
+import models.Departments;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -26,6 +28,29 @@ public class Sql2oDepartmentsDaoTest {
     @After
     public void tearDown() throws Exception {
         conn.close();
+    }
+    @Test
+    public void addingNewsSetsId() throws Exception {
+        Departments  testDepartments = setupDepartments();
+        assertNotEquals(0, testDepartments.getId());
+    }
+
+    @Test
+    public void addedDepartmentsAreReturnedFromGetAll() throws Exception {
+        Departments  testDepartments = setupDepartments();
+        assertEquals(1, departmentsDao.getAll().size());
+    }
+
+    @Test
+    public void noDepartmentsReturnsEmptyList() throws Exception {
+        assertEquals(0, departmentsDao.getAll().size());
+    }
+    //helpers
+
+    public Departments  setupDepartments (){
+        Departments  departments = new Departments("IT", "Programming", 500) ;
+        departmentsDao.add(departments);
+        return departments ;
     }
 
 }
