@@ -33,12 +33,26 @@ public class Sql2oUsersDaoTest {
         Users  testUsers = setupUsers();
         assertEquals(1, testUsers.getId());
     }
-
+    @Test
+    public void getAll() throws Exception {
+        Users  Users = setupUsers();
+        Users  Users2 = setupUsers();
+        assertEquals(2, usersDao.getAll().size());
+    }
+    @Test
+    public void getAllUsersByDepartments() throws Exception {
+        Departments testDepartments = setupDepartments();
+        Departments  otherDepartments = setupDepartments() ;
+        Users  Users = setupUsersForDepartments(testDepartments);
+        Users  Users2 = setupUsersForDepartments(testDepartments);
+        Users  usersForOtherDepartments = setupUsersForDepartments(otherDepartments);
+        assertEquals(3, usersDao.getAllUsersByDepartments(testDepartments.getId()).size());
+    }
 
     //helpers
 
     public Users  setupUsers() {
-        Users users = new Users("Rose", "Senior", "Maintanance", "rmogusu123@gmail.com",234,"IT",1) ;
+        Users users = new Users("Rose", "Senior", "Maintenance", "rmogusu123@gmail.com",234,"IT",1) ;
         usersDao.add(users);
         return users ;
     }
