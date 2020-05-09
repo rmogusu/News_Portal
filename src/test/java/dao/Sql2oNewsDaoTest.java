@@ -1,7 +1,9 @@
 package dao;
 
+import models.News;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -26,5 +28,28 @@ public class Sql2oNewsDaoTest {
     public void tearDown() throws Exception {
         conn.close();
     }
+    @Test
+    public void addingNewsSetsId() throws Exception {
+        News testNews = setupNews();
+        int originalNewsId = testNews.getId();
+        newsDao.add(testNews);
+        assertNotEquals(originalNewsId,testNews.getId());
+    }
 
+    @Test
+    public void addedNewsAreReturnedFromGetAll() throws Exception {
+        News testNews = setupNews();
+        newsDao.add(testNews);
+        assertEquals(1, newsDao.getAll().size());
+    }
+
+    @Test
+    public void noNewsReturnsEmptyList() throws Exception {
+        assertEquals(0, newsDao.getAll().size());
+    }
+    // helpers
+
+    public News setupNews(){
+        return new News("Sewage","corona") ;
+    }
 }
