@@ -47,6 +47,22 @@ public class Sql2oNewsDaoTest {
     public void noNewsReturnsEmptyList() throws Exception {
         assertEquals(0, newsDao.getAll().size());
     }
+    @Test
+    public void deleteByIdDeletesCorrectNews() throws Exception {
+        News news = setupNews();
+        newsDao.add(news);
+        newsDao.deleteById(news.getId());
+        assertEquals(0, newsDao.getAll().size());
+    }
+
+    @Test
+    public void clearAll() throws Exception {
+        News testNews = setupNews();
+        News otherNews = setupNews();
+        newsDao.clearAll();
+        assertEquals(0, newsDao.getAll().size());
+    }
+
     // helpers
 
     public News setupNews(){
