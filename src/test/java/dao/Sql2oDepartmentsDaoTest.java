@@ -96,6 +96,22 @@ public class Sql2oDepartmentsDaoTest {
         News [] news = {testNews , otherNews};
         assertEquals(Arrays.asList(news), departmentsDao.getAllNewsByDepartments(testDepartments.getId()) );
     }
+    @Test
+    public void deletingNewsAlsoUpdatesJoinTable() throws Exception {
+        Departments  testDepartments = setupDepartments();
+        departmentsDao.add(testDepartments);
+        News testNews = setupNews();
+        newsDao.add(testNews);
+        News anotherNews = setupNews();
+        newsDao.add(anotherNews);
+        newsDao.addNewsToDepartments(testNews ,testDepartments);
+        newsDao.addNewsToDepartments(anotherNews ,testDepartments);
+        newsDao.deleteById(testNews.getId());
+        newsDao.deleteById(anotherNews.getId());
+        assertEquals(0, newsDao.getAllDepartmentsByNews(testNews.getId()) .size());
+    }
+
+
     //helpers
 
     public Departments  setupDepartments (){
