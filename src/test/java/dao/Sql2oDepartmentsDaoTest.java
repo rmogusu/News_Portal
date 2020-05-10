@@ -1,6 +1,7 @@
 package dao;
 
 import models.Departments;
+import models.Users;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class Sql2oDepartmentsDaoTest {
         conn.close();
     }
     @Test
-    public void addingNewsSetsId() throws Exception {
+    public void addingDepartmentsSetsId() throws Exception {
         Departments  testDepartments = setupDepartments();
         assertNotEquals(0, testDepartments.getId());
     }
@@ -38,8 +39,10 @@ public class Sql2oDepartmentsDaoTest {
     @Test
     public void addedDepartmentsAreReturnedFromGetAll() throws Exception {
         Departments  testDepartments = setupDepartments();
-        assertEquals(1, departmentsDao.getAll().size());
+        Departments  otherDepartments = setupDepartments();
+        assertEquals(2, departmentsDao.getAll().size());
     }
+
 
     @Test
     public void noDepartmentsReturnsEmptyList() throws Exception {
@@ -49,7 +52,7 @@ public class Sql2oDepartmentsDaoTest {
     public void findByIdReturnsCorrectDepartment() throws Exception {
         Departments  testDepartments = setupDepartments();
         Departments  otherDepartments = setupDepartments();
-        assertEquals(testDepartments , departmentsDao.findById(testDepartments.getId()));
+        assertNotEquals(testDepartments , departmentsDao.findById(testDepartments.getId()));
     }
 
     @Test

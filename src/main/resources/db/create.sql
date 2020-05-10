@@ -23,3 +23,8 @@ CREATE TABLE IF NOT EXISTS users (
  department VARCHAR,
  departmentId INTEGER
 );
+CREATE TABLE IF NOT EXISTS departments_news (
+ id int PRIMARY KEY auto_increment,
+ newsId INTEGER,
+ departmentId INTEGER
+);
