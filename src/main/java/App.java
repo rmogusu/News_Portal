@@ -27,19 +27,23 @@ public class App {
             Departments departments = gson.fromJson(req.body(), Departments.class);
             departmentsDao.add(departments);
             res.status(201);
-            res.type("application/json");
+            //res.type("application/json");
             return gson.toJson(departments);
         });
         get("/departments", "application/json", (req, res) -> {
-            res.type("application/json");
+            //res.type("application/json");
             return gson.toJson(departmentsDao.getAll());
         });
 
         get("/departments/:id", "application/json", (req, res) -> {
             res.type("application/json");
             int departmentId = Integer.parseInt(req.params("id"));
-            res.type("application/json");
+            //res.type("application/json");
             return gson.toJson(departmentsDao.findById(departmentId));
+        });
+        //FILTERS
+        after((req, res) ->{
+            res.type("application/json");
         });
     }
 }
