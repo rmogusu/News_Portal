@@ -30,5 +30,16 @@ public class App {
             res.type("application/json");
             return gson.toJson(departments);
         });
+        get("/departments", "application/json", (req, res) -> {
+            res.type("application/json");
+            return gson.toJson(departmentsDao.getAll());
+        });
+
+        get("/departments/:id", "application/json", (req, res) -> {
+            res.type("application/json");
+            int departmentId = Integer.parseInt(req.params("id"));
+            res.type("application/json");
+            return gson.toJson(departmentsDao.findById(departmentId));
+        });
     }
 }
