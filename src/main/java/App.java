@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import dao.Sql2oDepartmentsDao;
 import dao.Sql2oNewsDao;
 import dao.Sql2oUsersDao;
+import models.Departments;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import static spark.Spark.*;
@@ -22,5 +23,12 @@ public class App {
         usersDao = new Sql2oUsersDao(sql2o);
         conn = sql2o.open();
 
+        post("/departments/new", "application/json", (req, res) -> {
+            Departments departments = gson.fromJson(req.body(), Departments.class);
+            departmentsDao.add(departments);
+            res.status(201);
+            res.type("application/json");
+            return gson.toJson(departments);
+        });
     }
 }
