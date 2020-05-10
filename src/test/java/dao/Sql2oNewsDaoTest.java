@@ -74,20 +74,13 @@ public class Sql2oNewsDaoTest {
     }
     @Test
     public void deletingDepartmentAlsoUpdatesJoinTable() throws Exception {
-        Foodtype testFoodtype  = new Foodtype("Seafood");
-        foodtypeDao.add(testFoodtype);
-
-        Restaurant testRestaurant = setupRestaurant();
-        restaurantDao.add(testRestaurant);
-
-        Restaurant altRestaurant = setupAltRestaurant();
-        restaurantDao.add(altRestaurant);
-
-        restaurantDao.addRestaurantToFoodtype(testRestaurant,testFoodtype);
-        restaurantDao.addRestaurantToFoodtype(altRestaurant, testFoodtype);
-
-        restaurantDao.deleteById(testRestaurant.getId());
-        assertEquals(0, restaurantDao.getAllFoodtypesByRestaurant(testRestaurant.getId()).size());
+        News testNews = setupNews();
+        newsDao.add(testNews);
+        Departments  testDepartments = setupDepartments();
+        departmentsDao.add(testDepartments);
+        departmentsDao.addDepartmentsToNews(testDepartments ,testNews);
+        departmentsDao.deleteById(testDepartments.getId());
+        assertEquals(0, departmentsDao.getAllNewsByDepartments(testDepartments.getId()) .size());
     }
 
     // helpers
