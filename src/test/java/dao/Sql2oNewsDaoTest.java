@@ -1,5 +1,6 @@
 package dao;
 
+import models.Departments;
 import models.News;
 import org.junit.After;
 import org.junit.Before;
@@ -62,10 +63,41 @@ public class Sql2oNewsDaoTest {
         newsDao.clearAll();
         assertEquals(0, newsDao.getAll().size());
     }
+    @Test
+    public void addNewsToDepartmentAddsTypeCorrectly() throws Exception {
+        Departments  testDepartments = setupDepartments();
+        departmentsDao.add(testDepartments);
+        News testNews = setupNews();
+        newsDao.add(testNews);
+        newsDao.addNewsToDepartments(testNews, testDepartments ) ;
+        assertEquals(1, newsDao.getAllDepartmentsByNews(testNews.getId()).size());
+    }
+    @Test
+    public void deletingDepartmentAlsoUpdatesJoinTable() throws Exception {
+        Foodtype testFoodtype  = new Foodtype("Seafood");
+        foodtypeDao.add(testFoodtype);
+
+        Restaurant testRestaurant = setupRestaurant();
+        restaurantDao.add(testRestaurant);
+
+        Restaurant altRestaurant = setupAltRestaurant();
+        restaurantDao.add(altRestaurant);
+
+        restaurantDao.addRestaurantToFoodtype(testRestaurant,testFoodtype);
+        restaurantDao.addRestaurantToFoodtype(altRestaurant, testFoodtype);
+
+        restaurantDao.deleteById(testRestaurant.getId());
+        assertEquals(0, restaurantDao.getAllFoodtypesByRestaurant(testRestaurant.getId()).size());
+    }
 
     // helpers
 
     public News setupNews(){
         return new News("Sewage","corona") ;
+    }
+    public Departments setupDepartments (){
+        Departments  departments = new Departments("IT", "Programming", 500) ;
+        departmentsDao.add(departments);
+        return departments ;
     }
 }

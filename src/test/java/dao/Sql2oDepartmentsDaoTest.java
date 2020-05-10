@@ -1,12 +1,15 @@
 package dao;
 
 import models.Departments;
+import models.News;
 import models.Users;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -80,13 +83,28 @@ public class Sql2oDepartmentsDaoTest {
         departmentsDao.clearAll();
         assertEquals(0, departmentsDao.getAll().size());
     }
-
+    @Test
+    public void DepartmentsReturnsNewsCorrectly() throws Exception {
+        News testNews = setupNews();
+        newsDao.add(testNews);
+        News otherNews = setupNews();
+        newsDao.add(otherNews);
+        Departments  testDepartments = setupDepartments();
+        departmentsDao.add(testDepartments);
+        departmentsDao.addDepartmentsToNews(testDepartments ,testNews);
+        departmentsDao.addDepartmentsToNews(testDepartments ,otherNews);
+        News [] news = {testNews , otherNews};
+        assertEquals(Arrays.asList(news), departmentsDao.getAllNewsByDepartments(testDepartments.getId()) );
+    }
     //helpers
 
     public Departments  setupDepartments (){
         Departments  departments = new Departments("IT", "Programming", 500) ;
         departmentsDao.add(departments);
         return departments ;
+    }
+    public News setupNews(){
+        return new News("Sewage","corona") ;
     }
 
 }

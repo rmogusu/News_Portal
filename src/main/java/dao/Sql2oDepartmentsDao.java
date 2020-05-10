@@ -1,10 +1,12 @@
 package dao;
 
 import models.Departments;
+import models.News;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sql2oDepartmentsDao implements DepartmentsDao  {
@@ -79,4 +81,41 @@ public class Sql2oDepartmentsDao implements DepartmentsDao  {
             System.out.println(ex);
         }
     }
-}
+    @Override
+    public void addDepartmentsToNews(Departments  departments , News news ){
+            String sql = "INSERT INTO departments_news (departmentId, newsId) VALUES (:departmentId, :newsId)";
+            try (Connection con = sql2o.open()) {
+                con.createQuery(sql)
+                        .addParameter("departmentId", departments .getId())
+                        .addParameter("newsId", news.getId())
+                        .executeUpdate();
+            } catch (Sql2oException ex){
+                System.out.println(ex);
+            }
+        }
+
+
+    @Override
+    public List<News> getAllNewsByDepartments(int departmentId){
+        ArrayList<News> news = new ArrayList();
+        String joinQuery = "SELECT newsId FROM departments_news WHERE departmentId = :departmentId";
+            try (Connection con = sql2o.open()) {
+                List<Integer> allNewsIds = con.createQuery(joinQuery)
+                        .addParameter("departmentId", departmentId)
+                        .executeAndFetch(Integer.class);
+                for (Integer newsId : allNewsIds){
+                    String NewsQuery = "SELECT * FROM news WHERE id = :newsId";
+                    news.add(
+                            con.createQuery(NewsQuery)
+                                    .addParameter("newsId", newsId)
+                                    .executeAndFetchFirst(News.class));
+                }
+            } catch (Sql2oException ex){
+                System.out.println(ex);
+            }
+        return news;
+        }
+
+    }
+
+
