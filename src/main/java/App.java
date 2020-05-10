@@ -2,9 +2,14 @@ import com.google.gson.Gson;
 import dao.Sql2oDepartmentsDao;
 import dao.Sql2oNewsDao;
 import dao.Sql2oUsersDao;
+import dao.UsersDao;
 import models.Departments;
+import models.Users;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+
+import java.util.List;
+
 import static spark.Spark.*;
 
 public class App {
@@ -23,23 +28,46 @@ public class App {
         usersDao = new Sql2oUsersDao(sql2o);
         conn = sql2o.open();
 
+        //CREATE
         post("/departments/new", "application/json", (req, res) -> {
             Departments departments = gson.fromJson(req.body(), Departments.class);
             departmentsDao.add(departments);
             res.status(201);
-            //res.type("application/json");
             return gson.toJson(departments);
         });
+        post("/departments/:departmentId/users/new", "application/json", (req, res) -> {
+            int departmentId = Integer.parseInt(req.params("departmentId"));
+            Users users = gson.fromJson(req.body(), Users.class);
+
+            users.setDepartmentId(departmentId);
+            usersDao.add(users);
+            res.status(201);
+            return gson.toJson(users);
+        });
+
+        //READ
         get("/departments", "application/json", (req, res) -> {
-            //res.type("application/json");
             return gson.toJson(departmentsDao.getAll());
         });
 
         get("/departments/:id", "application/json", (req, res) -> {
             res.type("application/json");
             int departmentId = Integer.parseInt(req.params("id"));
-            //res.type("application/json");
             return gson.toJson(departmentsDao.findById(departmentId));
+        });
+        get("/departments/:id/users", "application/json", (req, res) -> {
+            int departmentId = Integer.parseInt(req.params("id"));
+
+            Departments departmentsToFind = departmentsDao.findById(departmentId);
+            List<Users> allUsers;
+
+            if (departmentsToFind == null){
+                throw new ApiException(404, String.format("No departments with the id: \"%s\" exists", req.params("id")));
+            }
+
+            allUsers = UsersDao.getAllUsersByDepartments(departmentId);
+
+            return gson.toJson(allUsers);
         });
         //FILTERS
         after((req, res) ->{
