@@ -41,15 +41,28 @@ public class App {
             News  news = newsDao.findById(newsId);
 
             if (departments  != null && news != null){
-                //both exist and can be associated - we should probably not connect things that are not here.
                 newsDao.addNewsToDepartments(news ,departments);
                 res.status(201);
-                return gson.toJson(String.format("Departments '%s' and News '%s' have been associated",news.getGeneral() , departments .getName()));
+                return gson.toJson(String.format("Departments '%s' and News '%s' have been associated" , departments.getName() ,news.getGeneral()));
             }
             else {
                 throw new ApiException(404, String.format("Department or News does not exist"));
             }
         });
+        get("/departments/:id/news", "application/json", (req, res) -> {
+            int departmentId = Integer.parseInt(req.params("id"));
+            Departments  departmentsToFind = departmentsDao.findById(departmentId);
+            if (departmentsToFind == null){
+                throw new ApiException(404, String.format("No departments with the id: \"%s\" exists", req.params("id")));
+            }
+            else if (departmentsDao.getAllNewsByDepartments(departmentId) .size()==0){
+                return "{\"message\":\"I'm sorry, but no News are listed for this Department.\"}";
+            }
+            else {
+                return gson.toJson(departmentsDao.getAllNewsByDepartments(departmentId));
+            }
+        });
+
         post("/departments/new", "application/json", (req, res) -> {
             Departments departments = gson.fromJson(req.body(), Departments.class);
             departmentsDao.add(departments);
@@ -87,19 +100,6 @@ public class App {
             res.type("application/json");
             int newsId = Integer.parseInt(req.params("id"));
             return gson.toJson(newsDao.findById(newsId));
-        });
-        get("/departments/:id/news", "application/json", (req, res) -> {
-            int departmentId = Integer.parseInt(req.params("id"));
-            Departments  departmentsToFind = departmentsDao.findById(departmentId);
-            if (departmentsToFind == null){
-                throw new ApiException(404, String.format("No departments with the id: \"%s\" exists", req.params("id")));
-            }
-//            else if (departmentsDao.Departments(departmentId).size()==0){
-//                return "{\"message\":\"I'm sorry, but no News are listed for this Department.\"}";
-//            }
-            else {
-                return gson.toJson(departmentsDao.getAllNewsByDepartments(departmentId));
-            }
         });
 
         get("/news/:id/departments", "application/json", (req, res) -> {
