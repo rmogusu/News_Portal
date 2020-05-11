@@ -62,6 +62,20 @@ public class App {
                 return gson.toJson(departmentsDao.getAllNewsByDepartments(departmentId));
             }
         });
+        get("/news/:id/departments", "application/json", (req, res) -> {
+            int newsId = Integer.parseInt(req.params("id"));
+            News  newsToFind = newsDao.findById(newsId);
+            if (newsToFind == null){
+                throw new ApiException(404, String.format("No news with the id: \"%s\" exists", req.params("id")));
+            }
+            else if (newsDao.getAllDepartmentsByNews(newsId) .size()==0){
+                return "{\"message\":\"I'm sorry, but no departments are listed for this news.\"}";
+            }
+            else {
+                return gson.toJson(newsDao.getAllDepartmentsByNews(newsId) );
+            }
+        });
+
 
         post("/departments/new", "application/json", (req, res) -> {
             Departments departments = gson.fromJson(req.body(), Departments.class);
@@ -102,19 +116,7 @@ public class App {
             return gson.toJson(newsDao.findById(newsId));
         });
 
-        get("/news/:id/departments", "application/json", (req, res) -> {
-            int newsId = Integer.parseInt(req.params("id"));
-            News  newsToFind = newsDao.findById(newsId);
-            if (newsToFind == null){
-                throw new ApiException(404, String.format("No news with the id: \"%s\" exists", req.params("id")));
-            }
-            else if (newsDao.getAllDepartmentsByNews(newsId) .size()==0){
-                return "{\"message\":\"I'm sorry, but no departments are listed for this news.\"}";
-            }
-            else {
-                return gson.toJson(newsDao.getAllDepartmentsByNews(newsId) );
-            }
-        });
+
 //        get("/departments/:id/users", "application/json", (req, res) -> {
 //            int departmentId = Integer.parseInt(req.params("id"));
 //
