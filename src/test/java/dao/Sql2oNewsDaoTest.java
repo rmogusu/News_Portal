@@ -49,6 +49,12 @@ public class Sql2oNewsDaoTest {
         assertEquals(0, newsDao.getAll().size());
     }
     @Test
+    public void findByIdReturnsCorrectNews() throws Exception {
+        News testNews = setupNews();
+        News otherNews = setupNews();
+        assertNotEquals(testNews , newsDao.findById(testNews.getId()));
+    }
+    @Test
     public void deleteByIdDeletesCorrectNews() throws Exception {
         News news = setupNews();
         newsDao.add(news);
