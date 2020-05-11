@@ -76,13 +76,6 @@ public class App {
             }
         });
 
-
-        post("/departments/new", "application/json", (req, res) -> {
-            Departments departments = gson.fromJson(req.body(), Departments.class);
-            departmentsDao.add(departments);
-            res.status(201);
-            return gson.toJson(departments);
-        });
         post("/departments/:departmentId/users/new", "application/json", (req, res) -> {
             int departmentId = Integer.parseInt(req.params("departmentId"));
             Users users = gson.fromJson(req.body(), Users.class);
@@ -92,6 +85,7 @@ public class App {
             res.status(201);
             return gson.toJson(users);
         });
+
         post("/news/new", "application/json", (req, res) -> {
             News news = gson.fromJson(req.body(), News.class);
             newsDao.add(news);
@@ -100,36 +94,63 @@ public class App {
         });
         //READ
         get("/departments", "application/json", (req, res) -> {
-            return gson.toJson(departmentsDao.getAll());
+            System.out.println(departmentsDao.getAll());
+            if(departmentsDao.getAll().size() > 0){
+                return gson.toJson(departmentsDao.getAll());
+            }
+
+            else {
+                return "{\"message\":\"I'm sorry, but no departments are currently listed in the database.\"}";
+            }
+
         });
+
+        get("/departments/:id", "application/json", (req, res) -> {
+            int departmentId = Integer.parseInt(req.params("id"));
+            Departments  departmentsToFind = departmentsDao.findById(departmentId);
+            if (departmentsToFind == null){
+                throw new ApiException(404, String.format("No departments with the id: \"%s\" exists", req.params("id")));
+            }
+
+            return gson.toJson(departmentsToFind);
+        });
+
+        get("/departments/:id/users", "application/json", (req, res) -> {
+            int departmentId = Integer.parseInt(req.params("id"));
+
+            Departments departmentsToFind = departmentsDao.findById(departmentId);
+            List<Users> allUsers;
+            if (departmentsToFind == null){
+                throw new ApiException(404, String.format("No departments with the id: \"%s\" exists", req.params("id")));
+            }
+
+            allUsers = usersDao.getAllUsersByDepartments(departmentId);
+
+            return gson.toJson(allUsers);
+        });
+
         get("/news", "application/json", (req, res) -> {
             return gson.toJson(newsDao.getAll());
         });
-        get("/departments/:id", "application/json", (req, res) -> {
-            res.type("application/json");
-            int departmentId = Integer.parseInt(req.params("id"));
-            return gson.toJson(departmentsDao.findById(departmentId));
+
+        //create
+        post("/departments/new", "application/json", (req, res) -> {
+            Departments departments = gson.fromJson(req.body(), Departments.class);
+            departmentsDao.add(departments);
+            res.status(201);
+            return gson.toJson(departments);
         });
+
         get("/news/:id", "application/json", (req, res) -> {
-            res.type("application/json");
             int newsId = Integer.parseInt(req.params("id"));
-            return gson.toJson(newsDao.findById(newsId));
+            News   newsToFind = newsDao.findById(newsId);
+            if (newsToFind == null){
+                throw new ApiException(404, String.format("No news with the id: \"%s\" exists", req.params("id")));
+            }
+
+            return gson.toJson(newsToFind);
         });
 
-
-//        get("/departments/:id/users", "application/json", (req, res) -> {
-//            int departmentId = Integer.parseInt(req.params("id"));
-//
-//            Departments departmentsToFind = departmentsDao.findById(departmentId);
-//
-//            if (departmentsToFind == null){
-//                throw new ApiException(404, String.format("No departments with the id: \"%s\" exists", req.params("id")));
-//            }
-//
-//            allUsers = UsersDao.getAllUsersByDepartments(departmentId);
-//
-//            return gson.toJson(allUsers);
-//        });
         //FILTERS
         exception(ApiException.class, (exception, req, res) -> {
             ApiException err = (ApiException) exception;
