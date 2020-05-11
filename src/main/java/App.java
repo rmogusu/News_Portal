@@ -4,6 +4,7 @@ import dao.Sql2oDepartmentsDao;
 import dao.Sql2oNewsDao;
 import dao.Sql2oUsersDao;
 import dao.UsersDao;
+import exceptions.ApiException;
 import models.Departments;
 import models.News;
 import models.Users;
@@ -93,9 +94,9 @@ public class App {
             if (departmentsToFind == null){
                 throw new ApiException(404, String.format("No departments with the id: \"%s\" exists", req.params("id")));
             }
-            else if (departmentsDao.Departments(departmentId).size()==0){
-                return "{\"message\":\"I'm sorry, but no News are listed for this Department.\"}";
-            }
+//            else if (departmentsDao.Departments(departmentId).size()==0){
+//                return "{\"message\":\"I'm sorry, but no News are listed for this Department.\"}";
+//            }
             else {
                 return gson.toJson(departmentsDao.getAllNewsByDepartments(departmentId));
             }
