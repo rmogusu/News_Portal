@@ -114,7 +114,15 @@ public class App {
 
             return gson.toJson(departmentsToFind);
         });
+        get("/departments/:id/users/:id", "application/json", (req, res) -> {
+            int usersId = Integer.parseInt(req.params("id"));
+            Users  usersToFind = usersDao.findById(usersId);
+            if (usersToFind == null){
+                throw new ApiException(404, String.format("No users with the id: \"%s\" exists", req.params("id")));
+            }
 
+            return gson.toJson(usersToFind);
+        });
         get("/departments/:id/users", "application/json", (req, res) -> {
             int departmentId = Integer.parseInt(req.params("id"));
 

@@ -1,6 +1,7 @@
  package dao;
 
 
+ import models.News;
  import models.Users;
 
  import java.util.List;
@@ -11,6 +12,7 @@
 
   //read
   List<Users> getAll();
+  Users findById(int id);
   List<Users> getAllUsersByDepartments(int departmentId);
 
   //update

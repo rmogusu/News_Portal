@@ -36,7 +36,14 @@ public class Sql2oUsersDao implements UsersDao {
                     .executeAndFetch(Users.class);
         }
     }
-
+    @Override
+    public Users  findById(int id) {
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM users WHERE id = :id")
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(Users.class);
+        }
+    }
     @Override
     public  List<Users> getAllUsersByDepartments(int departmentId) {
         try (Connection con = sql2o.open()) {

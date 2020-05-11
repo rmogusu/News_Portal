@@ -49,6 +49,12 @@ public class Sql2oUsersDaoTest {
         assertEquals(2, usersDao.getAllUsersByDepartments(testDepartments.getId()).size());
     }
     @Test
+    public void findByIdReturnsCorrectUsers() throws Exception {
+        Users  testUsers = setupUsers();
+        Users  otherUsers = setupUsers();
+        assertEquals(testUsers , usersDao.findById(testUsers.getId()));
+    }
+    @Test
     public void deleteById() throws Exception {
         Users  testUsers = setupUsers();
         Users  otherUsers = setupUsers();

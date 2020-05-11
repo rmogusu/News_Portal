@@ -10,13 +10,12 @@ Rose Mogusu.
 * JRE.
 * IntelliJ.
 * Jenkins.
-* Heroku CLI.
-* Maven.
+
+
 
 ## Setup
-* Launch postgres
-* Type psql 
-
+* When posting information make sure you are pointing the correct route.
+* When retrieving data make sure you are pointing the correct route to avoid errors.
 
 
 
@@ -24,11 +23,14 @@ Rose Mogusu.
 * Junit.
 * Gradle.
 * Java.
-* spark.
+
 
 
 ## BDD(Behaviour Driven Development)
-* Record a sighting by filling the required form.
+* Make sure you have postman Account.
+* Retrieve information with GET method,with given route.
+* Add information with POST method, with the given route.
+* Test all routes with postman make sure it works successfully.
 
 
 	
