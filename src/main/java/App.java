@@ -43,7 +43,7 @@ public class App {
             if (departments  != null && news != null){
                 newsDao.addNewsToDepartments(news ,departments);
                 res.status(201);
-                return gson.toJson(String.format("Departments '%s' and News '%s' have been associated" , departments.getName() ,news.getGeneral()));
+                return gson.toJson(String.format("Departments '%s' and News '%s' have been associated" , departments.getName() ,news.getDepartment()));
             }
             else {
                 throw new ApiException(404, String.format("Department or News does not exist"));

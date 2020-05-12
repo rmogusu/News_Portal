@@ -15,8 +15,7 @@
   Users findById(int id);
   List<Users> getAllUsersByDepartments(int departmentId);
 
-  //update
-  //omit for now
+
 
   //delete
   void deleteById(int id);

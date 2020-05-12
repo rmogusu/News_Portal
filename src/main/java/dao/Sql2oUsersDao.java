@@ -32,7 +32,7 @@ public class Sql2oUsersDao implements UsersDao {
     @Override
     public List<Users> getAll() {
         try (Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM users")
+            return con.createQuery("SELECT * FROM users ORDER BY name ASC; ")
                     .executeAndFetch(Users.class);
         }
     }
