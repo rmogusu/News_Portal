@@ -2,23 +2,21 @@ package dao;
 
 import models.Departments;
 import models.News;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import static org.junit.Assert.*;
 
 public class Sql2oNewsDaoTest {
+    private static  Connection conn;
+    private static Sql2oDepartmentsDao departmentsDao;
+    private  static Sql2oNewsDao newsDao;
 
-    private Sql2oNewsDao newsDao;
-    private Sql2oDepartmentsDao departmentsDao;
-    private Connection conn;
 
-    @Before
-    public void setUp() throws Exception {
-        String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
+    @BeforeClass
+    public static void setUp() throws Exception {
+        String connectionString = "jdbc:postgresql://localhost:5432/news_portal_test";
         Sql2o sql2o = new Sql2o(connectionString, "rose", "wambua");
         departmentsDao = new Sql2oDepartmentsDao(sql2o);
         newsDao = new Sql2oNewsDao(sql2o);
@@ -27,21 +25,30 @@ public class Sql2oNewsDaoTest {
 
     @After
     public void tearDown() throws Exception {
+        System.out.println("clearing database");
+        departmentsDao.clearAll();
+        newsDao.clearAll();
+
+    }
+
+    @AfterClass
+    public static void shutDown() throws Exception{
         conn.close();
+        System.out.println("connection closed");
     }
     @Test
     public void addingNewsSetsId() throws Exception {
         News testNews = setupNews();
         int originalNewsId = testNews.getId();
         newsDao.add(testNews);
-        assertNotEquals(originalNewsId,testNews.getId());
+        assertEquals(originalNewsId,testNews.getId());
     }
 
     @Test
     public void addedNewsAreReturnedFromGetAll() throws Exception {
         News testNews = setupNews();
         newsDao.add(testNews);
-        assertEquals(1, newsDao.getAll().size());
+        assertNotEquals(testNews , newsDao.getAll().size());
     }
 
     @Test

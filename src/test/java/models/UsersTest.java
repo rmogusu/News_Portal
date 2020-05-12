@@ -48,7 +48,7 @@ public class UsersTest {
         assertEquals("IT", testUsers.getDepartment());
     }
     @Test
-    public void setNameSetsCorrectName() throws Exception {
+  public void setNameSetsCorrectName() throws Exception {
         Users  testUsers = setupUsers();
         testUsers.setName("Rose");
         assertNotEquals("Faith",testUsers.getName());
