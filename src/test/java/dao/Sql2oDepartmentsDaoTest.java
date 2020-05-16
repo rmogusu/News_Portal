@@ -41,18 +41,18 @@ public class Sql2oDepartmentsDaoTest {
         System.out.println("connection closed");
     }
 
-//    @Test
-//    public void addingDepartmentsSetsId() throws Exception {
-//        Departments  testDepartments = setupDepartments();
-//        assertNotEquals(0, testDepartments.getId());
-//    }
+    @Test
+    public void addingDepartmentsSetsId() throws Exception {
+        Departments  testDepartments = setupDepartments();
+        assertNotEquals(0, testDepartments.getId());
+    }
 
-//    @Test
-//    public void addedDepartmentsAreReturnedFromGetAll() throws Exception {
-//        Departments  testDepartments = setupDepartments();
-//        Departments  otherDepartments = setupDepartments();
-//        assertEquals(2, departmentsDao.getAll().size());
-//    }
+    @Test
+    public void addedDepartmentsAreReturnedFromGetAll() throws Exception {
+        Departments  testDepartments = setupDepartments();
+        Departments  otherDepartments = setupDepartments();
+        assertEquals(2, departmentsDao.getAll().size());
+    }
 
 
     @Test
@@ -65,24 +65,24 @@ public class Sql2oDepartmentsDaoTest {
         Departments  otherDepartments = setupDepartments();
         assertNotEquals(testDepartments , departmentsDao.findById(testDepartments.getId()));
     }
-//
-//    @Test
-//    public void updateCorrectlyUpdatesAllFields() throws Exception {
-//        Departments  testDepartments = setupDepartments();
-//        departmentsDao.update(testDepartments.getId(), "a", "b", 400);
-//        Departments  foundDepartments = departmentsDao.findById(testDepartments.getId());
-//        assertEquals("a", foundDepartments.getName());
-//        assertEquals("b", foundDepartments.getDescription());
-//        assertEquals(400, foundDepartments.getTotalNumber());
-//
-//    }
-//    @Test
-//    public void deleteByIdDeletesCorrectDepartment() throws Exception {
-//        Departments  testDepartments = setupDepartments();
-//        Departments  otherDepartments = setupDepartments();
-//        departmentsDao.deleteById(testDepartments.getId());
-//        assertEquals(1, departmentsDao.getAll().size());
-//    }
+
+    @Test
+    public void updateCorrectlyUpdatesAllFields() throws Exception {
+        Departments  testDepartments = setupDepartments();
+        departmentsDao.update(testDepartments.getId(), "a", "b", 400);
+        Departments  foundDepartments = departmentsDao.findById(testDepartments.getId());
+        assertEquals("a", foundDepartments.getName());
+        assertEquals("b", foundDepartments.getDescription());
+        assertEquals(400, foundDepartments.getTotalNumber());
+
+    }
+    @Test
+    public void deleteByIdDeletesCorrectDepartment() throws Exception {
+        Departments  testDepartments = setupDepartments();
+        Departments  otherDepartments = setupDepartments();
+        departmentsDao.deleteById(testDepartments.getId());
+        assertEquals(1, departmentsDao.getAll().size());
+    }
 
     @Test
     public void clearAll() throws Exception {
@@ -91,19 +91,19 @@ public class Sql2oDepartmentsDaoTest {
         departmentsDao.clearAll();
         assertEquals(0, departmentsDao.getAll().size());
     }
-//    @Test
-//    public void DepartmentsReturnsNewsCorrectly() throws Exception {
-//        News testNews = setupNews();
-//        newsDao.add(testNews);
-//        News otherNews = setupNews();
-//        newsDao.add(otherNews);
-//        Departments  testDepartments = setupDepartments();
-//        departmentsDao.add(testDepartments);
-//        departmentsDao.addDepartmentsToNews(testDepartments ,testNews);
-//        departmentsDao.addDepartmentsToNews(testDepartments ,otherNews);
-//        News [] news = {testNews , otherNews};
-//        assertEquals(Arrays.asList(news), departmentsDao.getAllNewsByDepartments(testDepartments.getId()) );
-//    }
+    @Test
+    public void DepartmentsReturnsNewsCorrectly() throws Exception {
+        News testNews = setupNews();
+        newsDao.add(testNews);
+        News otherNews = setupNews();
+        newsDao.add(otherNews);
+        Departments  testDepartments = setupDepartments();
+        departmentsDao.add(testDepartments);
+        departmentsDao.addDepartmentsToNews(testDepartments ,testNews);
+        departmentsDao.addDepartmentsToNews(testDepartments ,otherNews);
+        News [] news = {testNews , otherNews};
+        assertEquals(Arrays.asList(news), departmentsDao.getAllNewsByDepartments(testDepartments.getId()) );
+    }
     @Test
     public void deletingNewsAlsoUpdatesJoinTable() throws Exception {
         Departments  testDepartments = setupDepartments();

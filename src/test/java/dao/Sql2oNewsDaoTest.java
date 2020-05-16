@@ -41,7 +41,7 @@ public class Sql2oNewsDaoTest {
         News testNews = setupNews();
         int originalNewsId = testNews.getId();
         newsDao.add(testNews);
-        assertEquals(originalNewsId,testNews.getId());
+        assertNotEquals(originalNewsId,testNews.getId());
     }
 
     @Test

@@ -27,9 +27,6 @@ public class App {
 
         String connectionString = "jdbc:h2:~/news.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "rose", "wambua");
-
-        //String connectionString = "jdbc:postgresql://localhost:5432/news_portal";
-        //Sql2o sql2o = new Sql2o(connectionString, "rose", "wambua");
         departmentsDao = new Sql2oDepartmentsDao(sql2o);
         newsDao = new Sql2oNewsDao(sql2o);
         usersDao = new Sql2oUsersDao(sql2o);
