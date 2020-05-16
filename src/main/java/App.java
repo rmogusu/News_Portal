@@ -18,15 +18,27 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class App {
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567;
+    }
     public static void main(String[] args) {
+
+        port(getHerokuAssignedPort());
+        staticFileLocation("/public");
+
         Sql2oNewsDao newsDao;
         Sql2oDepartmentsDao departmentsDao;
         Sql2oUsersDao usersDao;
         Connection conn;
         Gson gson = new Gson();
-
-        String connectionString = "jdbc:h2:~/news.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
-        Sql2o sql2o = new Sql2o(connectionString, "rose", "wambua");
+        String connectionString = "jdbc:postgresql://ec2-52-71-55-81.compute-1.amazonaws.com:5432/d5c6mor32vabv5";
+        Sql2o sql2o = new Sql2o(connectionString,"wjuatbvaghqejr", "d30274c394193afb97199d206985dfdad1b91b6c9dff7e91f848a0ae77ca9a87");
+        //String connectionString = "jdbc:h2:~/news.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
+        //Sql2o sql2o = new Sql2o(connectionString, "rose", "wambua");
 
         departmentsDao = new Sql2oDepartmentsDao(sql2o);
         newsDao = new Sql2oNewsDao(sql2o);
